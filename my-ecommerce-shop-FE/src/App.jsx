@@ -6,6 +6,9 @@ import Home from './pages/Home'; // Chúng ta sẽ tạo file này ngay bên dư
 import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
+import RequireAuth from './components/RequireAuth';
+import MyAccount from './pages/MyAccount';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -16,6 +19,8 @@ function App() {
         <Route path="products" element={<Products />} />
         <Route path="products/:id" element={<ProductDetail />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="my-account" element={<RequireAuth><MyAccount /></RequireAuth>} />
         {/* Sau này thêm các route con như: path="products", path="cart"... */}
       </Route>
 
