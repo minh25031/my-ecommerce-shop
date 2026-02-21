@@ -5,7 +5,7 @@ import { Button, Input, Form, message, Card } from 'antd';
 import { loginSchema } from '../utils/validationSchema';
 import { useDispatch } from 'react-redux';
 import { login } from '../features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/logo/my-shop-logo.png';
 
 const Login = () => {
@@ -15,6 +15,8 @@ const Login = () => {
     resolver: yupResolver(loginSchema)
   });
 
+  const location = useLocation();
+
   const onSubmit = (data) => {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find(u => u.email === data.email && u.password === data.password);
@@ -22,7 +24,8 @@ const Login = () => {
     if (user) {
       dispatch(login(user)); // Gửi thông tin user lên Redux
       message.success('Đăng nhập thành công!');
-      navigate('/'); // Chuyển về trang chủ
+      const from = location.state?.from || '/';
+      navigate(from);
     } else {
       message.error('Email hoặc mật khẩu không đúng!');
     }

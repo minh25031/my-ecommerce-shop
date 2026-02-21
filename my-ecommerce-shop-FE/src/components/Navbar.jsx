@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, Button, Badge, Dropdown, Space, Input } from 'antd';
 import { ShoppingCartOutlined, UserOutlined, LogoutOutlined, DownOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { logout } from '../features/auth/authSlice';
 import logo from '../assets/logo/my-shop-logo.png';
 
@@ -13,6 +13,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const { Search } = Input;
+  const location = useLocation();
 
   // Menu thả xuống khi đã đăng nhập
   const userMenuItems = [
@@ -59,7 +60,10 @@ const Navbar = () => {
             type="text" 
             className="flex items-center justify-center"
             icon={<ShoppingCartOutlined className="text-2xl" />} 
-            onClick={() => { if (!isLoggedIn) { navigate('/login'); } else { navigate('/cart'); } }} 
+            onClick={() => {
+              if (!isLoggedIn) { navigate('/login', { state: { from: location.pathname + location.search } }); }
+              else { navigate('/cart'); }
+            }} 
           />
         </Badge>
 

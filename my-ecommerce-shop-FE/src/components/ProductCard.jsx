@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { addItem } from '../features/cart/cartSlice';
 
 const { Meta } = Card;
@@ -17,6 +17,7 @@ const formatPrice = (value) => {
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
   if (!product) return null;
@@ -24,7 +25,7 @@ const ProductCard = ({ product }) => {
 
   const handleAddToCart = () => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate('/login', { state: { from: location.pathname + location.search } });
       return;
     }
 
@@ -37,7 +38,7 @@ const ProductCard = ({ product }) => {
       hoverable
       cover={<img alt={product.name} src={img} className="object-cover h-48 w-full" />}
       className="h-full"
-      actions={[<Button type="link">Xem chi tiết</Button>]}
+      actions={[<Button key="detail" type="link" onClick={() => navigate(`/products/${product.id}`)}>Xem chi tiết</Button>]}
     >
       <Meta title={product.name} description={product.description} />
       <div className="mt-3">
