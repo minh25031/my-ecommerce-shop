@@ -32,7 +32,7 @@ const Navbar = () => {
     <div className="flex justify-between items-center px-4 md:px-10 h-16 bg-white">
       {/* Logo */}
       <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-        <img src={logo} alt="Logo" className="h-12 md:h-14 w-auto mr-3" />
+        <img src={logo} alt="Logo" loading="lazy" className="h-12 md:h-14 w-auto mr-3" />
         <span className="text-xl font-bold text-blue-600 hidden md:block">MY-SHOP</span>
       </div>
       {/* Menu giữa */}

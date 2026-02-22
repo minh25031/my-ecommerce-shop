@@ -36,15 +36,23 @@ const ProductCard = ({ product }) => {
   return (
     <Card
       hoverable
-      cover={<img alt={product.name} src={img} className="object-cover h-48 w-full" />}
-      className="h-full"
-      actions={[<Button key="detail" type="link" onClick={() => navigate(`/products/${product.id}`)}>Xem chi tiết</Button>]}
+      cover={<img alt={product.name} src={img} loading="lazy" className="object-cover h-48 w-full" />}
+      className="h-full flex flex-col"
+      bodyStyle={{ display: 'flex', flexDirection: 'column', padding: 16, flex: 1 }}
     >
-      <Meta title={product.name} description={product.description} />
-      <div className="mt-3">
-        <div className="font-bold text-lg">{formatPrice(product.price)}</div>
-        <div className="mt-3 flex justify-end">
-          <Button type="primary" className="w-full md:w-auto" onClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <Meta title={product.name} description={product.description} />
+
+        <div className="mt-3 flex-1">
+          {/* description area grows to keep consistent card heights */}
+          <div className="text-lg font-bold">{formatPrice(product.price)}</div>
+        </div>
+
+        <div className="mt-3 flex flex-col gap-2">
+          <Button type="primary" block onClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
+          <div className="text-right">
+            <Button type="link" onClick={() => navigate(`/products/${product.id}`)}>Xem chi tiết</Button>
+          </div>
         </div>
       </div>
     </Card>
